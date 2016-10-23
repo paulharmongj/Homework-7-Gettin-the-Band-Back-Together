@@ -13,42 +13,13 @@ knitr::opts_chunk$set(echo = TRUE,warning=F,message=F,comment=NA,fig.width=5,fig
 
   - __You should be creating a table that contains twelve models.__
 
-The table below dispalys information for the twelve models created with different combinations of trends and seasonal components. The table has been sorted by AIC for each model, from lowest to highest, allowing us to essentially rank the models in terms of fit. The lowest AIC is the "best" model. In this case, the best choice is the model with a linear trend and single harmonic.
+The table below dispalys information for the twelve models created with different combinations of trends and seasonal components. The table has been sorted by AIC for each model, from lowest to highest, allowing us to essentially rank the models in terms of fit. The lowest AIC is the "best" model. In this case, the best choice is the model with a linear trend and single __harmon__ic.
 
 ```{r prob1,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
 #read in the data
 CGO <- read.table("ftp://aftp.cmdl.noaa.gov/data/trace_gases/co2/flask/surface/co2_cgo_surface-flask_1_ccgg_month.txt",header=T)
 colnames(CGO) = c("Site", "Year", "Month", "Value")
 
-##Trend Component##
-#no trend no seasonal
-nt.lm.1 <- lm(Value~1, data = CGO)
-#no trend seasonal means
-nt.lm.2 <- lm(Value ~ Month, data = CGO)
-#no trend single harmonic
-nt.lm.3 <- lm(Value ~ )
-#no trend 5 harmonic 
-nt.lm.4
-##Linear Trend
-#linear trend no seasonal
-
-#linear trend seasonal means
-
-#linear trend single harmonic
-
-#linear trend 5 harmonic
-
-##Quadratic Trend
-#quad trend no seaonal
-
-#quad trend seasonal means
-
-#quad trend single harmon
-
-#quad trend 5 harmon
-
-
-=======
 CGOts<-ts(CGO$Value,start=c(1984,5),freq=12)
 YearF <- as.vector(time(CGOts))
 MonthF <- as.factor(cycle(CGOts))
