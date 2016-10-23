@@ -133,7 +133,21 @@ library(nlme)
 ## Some derivation practice (these can be handwritten). If you have not completed STAT 421 or equivalent, please try the problem and then take advantage of advanced help by stopping by to chat about your answer. 
 
 6) _Answer Cryer and Chan question 2.4 (page 20)_
-__Please see handwritten solutions to this problem. Thanks!__
+
+a. __Part A is as follows.__ 
+
+The autocorrelation function is calculated as follows:
+$$\rho_{t,s} = \frac{\gamma_{t,s]}}{\sqrt(\gamma_{s,s}\gamma_{t,t}}$$ 
+
+This is equal to:
+$$\frac{\theta\sigma^2_{w}}{\sqrt((1+\theta^{2})\sigma^{2}_{w})}$$
+
+Cancelling terms out, we obtain:
+$$\frac{\theta}{1+\theta^{2}}$$ 
+
+We can then plug in both values for $\theta$. Note that for $3$ we obtain $\frac{3}{10}$ and we obtain the same answer when plugging in $\frac{1}{3}$ as well. Thus our solution is the same for both values of $\theta$. 
+
+b) __Part B:__ You could/could not determine whether your estimate of $\theta$ is reasonable based on the estimate of $\rho_{k}$. The estimate of $\rho_{k}$ is an estimate of the correlation between a time point at time $t$ and the $t+k$ th time point; it tells us when cycles or trends occur. Thus, if $\rho_{12}$ was large we might have reason to expect a yearly trend occuring in the process, assuming other correlations were small. However, the paramter $\theta$ refers more to an amplitude shifter; it tells us how big of an effect the lag-1 observation has on the current observation; therefore, the only correlation $\rho_{1}$ would be used in this process. The ability to estimate paramater $\theta$, based on your correlations between lags, then, does not seem to be particularly valid unless you have a strong lag-1 process. 
 
 
 7) _Suppose that we are interested in the properties of a local average (linear filter) of two observations from an original time series, $xt$. The new series is $yt=(0.5)*(x{t-1}+xt)$. The mean of $xt$ is 3, the variance of $xt$ is 4, and the correlation between any neighboring $xt$'s is 0.5 (so $cor(xt, x{t-1})=0.5$). $xt$'s more than two time points apart are uncorrelated (correlation is 0). Use the rules for means and variances of linear combinations to find $E(yt)$, $Var(yt)$, and $Cov(yt,y{t-1})$. Do not worry about what happens at the edges of the time series (for t=1 or t=n), only worry about $t$ in general._
