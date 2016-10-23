@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,warning=F,message=F,comment=NA,fig.width=5,fig.height=3.5)
+knitr::opts_chunk$set(echo = TRUE,warning=F,message=F,comment=NA,fig.width=6,fig.height=4)
 ```
 
 1) _We are going to be exploring a more complete model that includes a long-term trend and a seasonal component. We need to pick the type of trend and the form of the seasonal component. For the long term trend, consider the following options: no trend, linear trend, or quadratic trend. For the seasonal component, consider no seasonal component, seasonal means, single harmonic pair (m=1), and 5th order harmonic (m=5). Consider all combinations of these components, fit using `lm`.  Create a table that contains the model description, model used DF (so the count of free parameters), AICs, and $\Delta$AICs, sorting the table by AIcs. Use this information to discuss the top model selected (what was in it), the strength of support for that model versus the others, and the strength of evidence for a long-term trend and seasonal component (of the type selected) versus not including them in the model._ 
@@ -96,10 +96,11 @@ pandoc.table(sorted)
   
 
 2) _Now fit a `gam` from the `mgcv` package that includes a long-term trend based on a thin-plate spline with shrinkage that uses `k=#years,bs="ts"` from the fractional year variable and a cyclic spline seasonal component. To build the cyclic spline component, use the numerically coded month variable that goes from 1 to 12 and `k=12,bs="cc"`. Fit the model, plot the long-term trend and the seasonal component and discuss the estimated components, using both the plots and the EDF of each term._
-```{r prob2,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
+```{r prob2,tidy=TRUE,tidy.opts=list(width.cutoff=50),fig.height=5.5}
 library(mgcv)
 monthymcmonthface <- CGO$Month
 gam.model<-gam(CGOts~s(time(CGOts),k=31,bs="ts")+s(monthymcmonthface,k=12,bs="cc"))
+par(mfrow=c(2,1))
 plot(gam.model)
 summary(gam.model)
 ```
@@ -133,6 +134,7 @@ library(nlme)
 ## Some derivation practice (these can be handwritten). If you have not completed STAT 421 or equivalent, please try the problem and then take advantage of advanced help by stopping by to chat about your answer. 
 
 6) _Answer Cryer and Chan question 2.4 (page 20)_
+
 __Please see handwritten solutions to this problem. Thanks!__
 
 
