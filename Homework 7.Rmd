@@ -152,8 +152,6 @@ We can then plug in both values for $\theta$. Note that for $3$ we obtain $\frac
 b) __Part B:__ You could/could not determine whether your estimate of $\theta$ is reasonable based on the estimate of $\rho_{k}$. The estimate of $\rho_{k}$ is an estimate of the correlation between a time point at time $t$ and the $t+k$ th time point; it tells us when cycles or trends occur. Thus, if $\rho_{12}$ was large we might have reason to expect a yearly trend occuring in the process, assuming other correlations were small. However, the paramter $\theta$ refers more to an amplitude shifter; it tells us how big of an effect the lag-1 observation has on the current observation; therefore, the only correlation $\rho_{1}$ would be used in this process. The ability to estimate paramater $\theta$, based on your correlations between lags, then, does not seem to be particularly valid unless you have a strong lag-1 process. 
 
 
-
-
 7) _Suppose that we are interested in the properties of a local average (linear filter) of two observations from an original time series, $xt$. The new series is $yt=(0.5)*(x{t-1}+xt)$. The mean of $xt$ is 3, the variance of $xt$ is 4, and the correlation between any neighboring $xt$'s is 0.5 (so $cor(xt, x{t-1})=0.5$). $xt$'s more than two time points apart are uncorrelated (correlation is 0). Use the rules for means and variances of linear combinations to find $E(yt)$, $Var(yt)$, and $Cov(yt,y{t-1})$. Do not worry about what happens at the edges of the time series (for t=1 or t=n), only worry about $t$ in general._
 
   - _Note that you have some preliminary work to complete to go from the provided information to what you need to work on the three derivations requested._
@@ -163,7 +161,7 @@ __Please see handwritten solutions to this problem. Thanks!__
 ##R Version Information
 ```{r}
 getRversion()
-
+sessionInfo()R.version$nickname
 ```
 
 
