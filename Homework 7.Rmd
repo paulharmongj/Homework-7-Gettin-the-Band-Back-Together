@@ -151,7 +151,6 @@ We can then plug in both values for $\theta$. Note that for $3$ we obtain $\frac
 
 b) __Part B:__ You could/could not determine whether your estimate of $\theta$ is reasonable based on the estimate of $\rho_{k}$. The estimate of $\rho_{k}$ is an estimate of the correlation between a time point at time $t$ and the $t+k$ th time point; it tells us when cycles or trends occur. Thus, if $\rho_{12}$ was large we might have reason to expect a yearly trend occuring in the process, assuming other correlations were small. However, the paramter $\theta$ refers more to an amplitude shifter; it tells us how big of an effect the lag-1 observation has on the current observation; therefore, the only correlation $\rho_{1}$ would be used in this process. The ability to estimate paramater $\theta$, based on your correlations between lags, then, does not seem to be particularly valid unless you have a strong lag-1 process. 
 
-__Please see handwritten solutions to this problem. Thanks!__
 
 
 
