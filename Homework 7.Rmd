@@ -123,13 +123,17 @@ AIC(gam.model)
 - _In a `gls` model summary, the estimates, SEs, test statistics, and p-values are contained in the `tTable` part of the summary. It has a similar layout to `coef` that we pulled the [2,4] element from to get the p-value from `lm`._
 
 ```{r prob 5,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
-
+library(nlme)
 ```
 
 ## Some derivation practice (these can be handwritten). If you have not completed STAT 421 or equivalent, please try the problem and then take advantage of advanced help by stopping by to chat about your answer. 
 
 6) _Answer Cryer and Chan question 2.4 (page 20)_
+__Please see handwritten solutions to this problem. Thanks!__
+
 
 7) _Suppose that we are interested in the properties of a local average (linear filter) of two observations from an original time series, $xt$. The new series is $yt=(0.5)*(x{t-1}+xt)$. The mean of $xt$ is 3, the variance of $xt$ is 4, and the correlation between any neighboring $xt$'s is 0.5 (so $cor(xt, x{t-1})=0.5$). $xt$'s more than two time points apart are uncorrelated (correlation is 0). Use the rules for means and variances of linear combinations to find $E(yt)$, $Var(yt)$, and $Cov(yt,y{t-1})$. Do not worry about what happens at the edges of the time series (for t=1 or t=n), only worry about $t$ in general._
 
   - _Note that you have some preliminary work to complete to go from the provided information to what you need to work on the three derivations requested._
+  
+__Please see handwritten solutions to this problem. Thanks!__  
