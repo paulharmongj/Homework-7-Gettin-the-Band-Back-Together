@@ -20,21 +20,33 @@ CGO <- read.table("ftp://aftp.cmdl.noaa.gov/data/trace_gases/co2/flask/surface/c
 colnames(CGO) = c("Site", "Year", "Month", "Value")
 
 ##Trend Component##
-#no trend
-f
-#linear trend
+#no trend no seasonal
+nt.lm.1 <- lm(Value~1, data = CGO)
+#no trend seasonal means
+nt.lm.2 <- lm(Value ~ Month, data = CGO)
+#no trend single harmonic
+nt.lm.3 <- lm(Value ~ )
+#no trend 5 harmonic 
+nt.lm.4
+##Linear Trend
+#linear trend no seasonal
 
-#quad trend
+#linear trend seasonal means
 
-###Seasonal Component###
-#no seasonal
+#linear trend single harmonic
 
-#seasonal means
+#linear trend 5 harmonic
 
-# single harmonic pair (m=1)
+##Quadratic Trend
+#quad trend no seaonal
+
+#quad trend seasonal means
+
+#quad trend single harmon
+
+#quad trend 5 harmon
 
 
-# fifth order _harmon_ic
 ```
 
   
