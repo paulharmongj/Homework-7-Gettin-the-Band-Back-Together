@@ -141,3 +141,11 @@ __Please see handwritten solutions to this problem. Thanks!__
   - _Note that you have some preliminary work to complete to go from the provided information to what you need to work on the three derivations requested._
   
 __Please see handwritten solutions to this problem. Thanks!__  
+
+##R Version Information
+```{r}
+getRversion()
+
+```
+
+
