@@ -113,7 +113,11 @@ AIC(gam.model)
 
 4) _Compare the fitted values of your GAM to those from your top model, plotting the two models's results and the responses vs time on the same plot._
 ```{r prob4,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
-
+topfit<-fitted(m7)
+gamfit<-fitted(gam.model)
+plot(CGOts,col="hotpink",lwd=4)
+lines(topfit~YearF,type="l",col="red",lwd=3)
+lines(gamfit~YearF,type="l",col="blue",lwd=3,lty=2)
 ```
 
 ## A simulation study with autocorrelation present
