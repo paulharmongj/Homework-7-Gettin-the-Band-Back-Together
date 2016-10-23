@@ -161,7 +161,7 @@ __Please see handwritten solutions to this problem. Thanks!__
 ##R Version Information
 ```{r}
 getRversion()
-sessionInfo()R.version$nickname
+sessionInfo()$R.version$nickname
 ```
 
 
