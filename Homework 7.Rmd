@@ -131,9 +131,9 @@ lines(gamfit~YearF,type="l",col="blue",lwd=3,lty=2)
 library(nlme)
 set.seed(10282016)
 num.sims=1000
-x=seq(1,109,by=1)
+x=seq(1,380,by=1)
 happened<-logical(length=num.sims)
-ar<-as.data.frame(cbind(seq(1,109,by=1),rep(12,109)))
+ar<-as.data.frame(cbind(seq(1,380,by=1),rep(12,109)))
 colnames(ar)<-c("index","noise")
 Val<-CGO$Value
 base<-gls(Val~YearF,method="ML",correlation=corAR1(0.6,form=~1))
