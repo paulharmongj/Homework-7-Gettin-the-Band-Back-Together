@@ -138,7 +138,7 @@ colnames(ar)<-c("index","noise")
 Val<-CGO$Value
 base<-gls(Val~YearF,method="ML",correlation=corAR1(0.6,form=~1))
 for(i in 1:num.sims) {
-  ar[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=summary(base)$sigma)
+  ar[,2]<-arima.sim(n=380,model=list(ar=c(.6)),sd=summary(base)$sigma)
   model.gls<-gls(noise~index,data=ar,correlation=corAR1(0.6,form=~1))
   pvalue.nt<-summary(model.gls)$tTable[2,4]
   happened[i]<-pvalue.nt<.05
