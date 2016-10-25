@@ -130,21 +130,30 @@ lines(gamfit~YearF,type="l",col="blue",lwd=3,lty=2)
 ```{r prob 5,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
 library(nlme)
 set.seed(10282016)
-num.sims=1000
+num.sims=10
 x=seq(1,380,by=1)
 happened<-logical(length=num.sims)
+happened.ma<-logical(length=num.sims)
 ar<-as.data.frame(cbind(seq(1,380,by=1),rep(12,109)))
+ma<-as.data.frame(cbind(seq(1,380,by=1),rep(12,109)))
 colnames(ar)<-c("index","noise")
 Val<-CGO$Value
-base<-gls(Val~YearF,method="ML",correlation=corAR1(0.6,form=~1))
+base<-gls(Val~YearF,method="ML",correlation=corAR1())
+base.ma <- gls(Val~YearF,method="ML",correlation=corARMA(p=1,q=1))
 for(i in 1:num.sims) {
   ar[,2]<-arima.sim(n=380,model=list(ar=c(.6)),sd=summary(base)$sigma)
-  model.gls<-gls(noise~index,data=ar,correlation=corAR1(0.6,form=~1))
+  ma[,2]<-arima.sim(n=380,model=list(ar=c(.6)),sd=summary(base.ma)$sigma)
+  model.ma.gls<-gls(noise~index,data=ar,correlation=corARMA(p=1,q=1))
+  model.gls<-gls(noise~index,data=ar,correlation=corAR1())
   pvalue.nt<-summary(model.gls)$tTable[2,4]
+  pvalue.mat<-summary(model.ma.gls)$tTable[2,4]
+  happened.ma[i]<-pvalue.mat<.05
   happened[i]<-pvalue.nt<.05
 }
 sim.gls<-sum(happened==TRUE)/num.sims
 sim.gls
+sim.gls.ma<-sum(happened.ma==TRUE)/num.sims
+sim.gls.ma
 ```
 
 ## Some derivation practice (these can be handwritten). If you have not completed STAT 421 or equivalent, please try the problem and then take advantage of advanced help by stopping by to chat about your answer. 
