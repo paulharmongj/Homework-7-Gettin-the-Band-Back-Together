@@ -128,10 +128,10 @@ lines(gamfit~YearF,type="l",col="blue",lwd=3,lty=2)
 
 - _In a `gls` model summary, the estimates, SEs, test statistics, and p-values are contained in the `tTable` part of the summary. It has a similar layout to `coef` that we pulled the [2,4] element from to get the p-value from `lm`._
 
-```{r prob 5,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
+```{r prob 5,tidy=TRUE,tidy.opts=list(width.cutoff=50),cache=TRUE}
 library(nlme)
 set.seed(10282016)
-num.sims=100
+num.sims=1000
 x=seq(1,109,by=1)
 happened<-logical(length=num.sims)
 happened.ma<-logical(length=num.sims)
@@ -139,12 +139,11 @@ ar<-as.data.frame(cbind(seq(1,109,by=1),rep(12,109)))
 ma<-as.data.frame(cbind(seq(1,109,by=1),rep(12,109)))
 colnames(ar)<-c("index","noise")
 colnames(ma)<-c("index","noise")
-Val<-CGO$Value
 
 for(i in 1:num.sims) {
-  ar[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=summary(sd=sqrt(0.0006664659)))
-  ma[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=summary(sd=sqrt(0.0006664659)))
-  model.ma.gls<-gls(noise~index,data=ma,correlation=corARMA(p=0.6,q=1))
+  ar[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=sqrt(0.0006664659))
+  ma[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=sqrt(0.0006664659))
+  model.ma.gls<-gls(noise~index,data=ma,correlation=corARMA(p=1,q=1))
   model.gls<-gls(noise~index,data=ar,correlation=corAR1())
   pvalue.nt<-summary(model.gls)$tTable[2,4]
   pvalue.mat<-summary(model.ma.gls)$tTable[2,4]
