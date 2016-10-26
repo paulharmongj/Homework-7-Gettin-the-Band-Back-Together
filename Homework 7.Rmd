@@ -116,6 +116,7 @@ AIC(gam.model)
 ```{r prob4,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
 topfit<-fitted(m7)
 gamfit<-fitted(gam.model)
+par(mfrow=c(1,1))
 plot(CGOts,col="hotpink",lwd=4)
 lines(topfit~YearF,type="l",col="red",lwd=3)
 lines(gamfit~YearF,type="l",col="blue",lwd=3,lty=2)
@@ -130,12 +131,12 @@ lines(gamfit~YearF,type="l",col="blue",lwd=3,lty=2)
 ```{r prob 5,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
 library(nlme)
 set.seed(10282016)
-num.sims=10
+num.sims=100
 x=seq(1,380,by=1)
 happened<-logical(length=num.sims)
 happened.ma<-logical(length=num.sims)
-ar<-as.data.frame(cbind(seq(1,380,by=1),rep(12,109)))
-ma<-as.data.frame(cbind(seq(1,380,by=1),rep(12,109)))
+ar<-as.data.frame(cbind(seq(1,380,by=1),rep(12,380)))
+ma<-as.data.frame(cbind(seq(1,380,by=1),rep(12,380)))
 colnames(ar)<-c("index","noise")
 Val<-CGO$Value
 base<-gls(Val~YearF,method="ML",correlation=corAR1())
