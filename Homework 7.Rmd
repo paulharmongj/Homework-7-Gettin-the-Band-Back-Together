@@ -140,8 +140,7 @@ ma<-as.data.frame(cbind(seq(1,109,by=1),rep(12,109)))
 colnames(ar)<-c("index","noise")
 colnames(ma)<-c("index","noise")
 Val<-CGO$Value
-base<-gls(Val~YearF,method="ML",correlation=corAR1())
-base.ma <- gls(Val~YearF,method="ML",correlation=corARMA(p=1,q=1))
+
 for(i in 1:num.sims) {
   ar[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=summary(sd=sqrt(0.0006664659)))
   ma[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=summary(sd=sqrt(0.0006664659)))
