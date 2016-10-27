@@ -173,11 +173,16 @@ b)
 
 
 7) _Suppose that we are interested in the properties of a local average (linear filter) of two observations from an original time series, $xt$. The new series is $yt=(0.5)*(x{t-1}+xt)$. The mean of $xt$ is 3, the variance of $xt$ is 4, and the correlation between any neighboring $xt$'s is 0.5 (so $cor(xt, x{t-1})=0.5$). $xt$'s more than two time points apart are uncorrelated (correlation is 0). Use the rules for means and variances of linear combinations to find $E(yt)$, $Var(yt)$, and $Cov(yt,y{t-1})$. Do not worry about what happens at the edges of the time series (for t=1 or t=n), only worry about $t$ in general._
-
+    
+    __The $Cov(x_t, x_{t-1})$ needs to be calculated, give $Cor(x_t, x_{t-1}) = \frac{1}{2}$ we can calculate the covariance as follows;__
+    \begin{align*}
+    \frac{1}{2} &=\frac{Cov(x_t,x_{t-1})}{\sqrt{Var(x_t)Var(x_{t-1})}}\\ 
+    \end{align*}
+    \begin{align*}
+    Cov(x_t,x_{t-1})= 2
+    \end{align*}
     __Given $E(x_t)=3$, $Var(x_t)=4$, $cor(x_t,x_{t-1})=0.5$, and the correlation of any $x_{t}'s$ further than two time points apart are uncorrelated, we can write the expected value of $y_t$ as;__
     \begin{align*}
-    \frac{1}{2} &= Cov(x_t,x_{t-1})/sqrt{Var(x_t)Var(x_{t-1})}\\
-    &= 2 
     E(y_t) &= E(\frac{x_{t-1} + x_t}{2})\\
     &= E(\frac{x_{t-1}}{2}) + E(\frac{x_{t}}{2})\\
     &= \frac{3}{2} + \frac{3}{2}\\
