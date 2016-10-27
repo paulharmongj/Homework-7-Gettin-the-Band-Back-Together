@@ -23,7 +23,6 @@ colnames(CGO) = c("Site", "Year", "Month", "Value")
 CGOts<-ts(CGO$Value,start=c(1984,5),freq=12)
 YearF <- as.vector(time(CGOts))
 MonthF <- as.factor(cycle(CGOts))
-YearF2 <- YearF^2
 
 library(TSA)
 
@@ -60,19 +59,19 @@ m8<-lm(CGO$Value~YearF+harmonic(CGOts,m=5))
 fits8<-fitted(m8)
 
 #m9 - quad trend, no season
-m9<-lm(CGO$Value~YearF2)
+m9<-lm(CGO$Value~poly(YearF,degree=2))
 fits9<-fitted(m9)
 
 #m10 - quad trend, seasonal means
-m10<-lm(CGO$Value~YearF2+MonthF)
+m10<-lm(CGO$Value~poly(YearF,degree=2)+MonthF)
 fits10<-fitted(m10)
 
 #m11 - quad trend, single order harm
-m11<-lm(CGO$Value~YearF2+harmonic(CGOts,m=1))
+m11<-lm(CGO$Value~poly(YearF,degree=2)+harmonic(CGOts,m=1))
 fits11<-fitted(m11)
 
 #m12 - quad trend, 5th order harm
-m12<-lm(CGO$Value~YearF2+harmonic(CGOts,m=5))
+m12<-lm(CGO$Value~poly(YearF,degree=2)+harmonic(CGOts,m=5))
 fits12<-fitted(m12)
 
 #real inefficient code...
