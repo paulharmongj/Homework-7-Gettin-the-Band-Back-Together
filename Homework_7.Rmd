@@ -13,8 +13,7 @@ knitr::opts_chunk$set(echo = TRUE,warning=F,message=F,comment=NA,fig.width=6,fig
 
   - __You should be creating a table that contains twelve models.__
 
-The table below dispalys information for the twelve models created with different combinations of trends and seasonal components. The table has been sorted by AIC for each model, from lowest to highest, allowing us to essentially rank the models in terms of fit. The lowest AIC is the "best" model. In this case, the best choice is the model with a quadratic trend and single harmonic. We could consider that there is a reasonably large difference between the best AIC-selected model and the next best couple of models; further, the 2nd best involves a 5th-order harmonic, so it may have higher model complexity as well.  The t-test for a long-term trend indicates strong evidence of a long term trend; further, it indicates that the harmonic pieces should be included in the model as well. 
-
+After fitting the twelve models with a combination of trends and seasonal components, a plot of all of the models can be examined to get an idea for what models we are looking at. The plot tells us that the models with a quadratic or linear trend follow the time series relatively well whereas the models with no trend don't do a great job, as expected. The table below dispalys information for the twelve models created with different combinations of trends and seasonal components. The table has been sorted by AIC for each model, from lowest to highest, allowing us to essentially rank the models in terms of fit. The lowest AIC is the "best" model. In this case, there is stong support for the model with a quadratic trend and single harmonic as it has the lowest AIC, and it beats the next best by more than eleven AIC units.
 ```{r prob1,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
 #read in the data
 CGO <- read.table("ftp://aftp.cmdl.noaa.gov/data/trace_gases/co2/flask/surface/co2_cgo_surface-flask_1_ccgg_month.txt",header=T)
@@ -76,7 +75,7 @@ fits12<-fitted(m12)
 
 #real inefficient code...
 allthefits<-cbind(fits1,fits2,fits3,fits4,fits5,fits6,fits7,fits8,fits9,fits10,fits11,fits12)
-matplot(YearF,allthefits,type="l",col=1:12,lty=1:12)
+matplot(YearF,allthefits,type="l",col=1:12,lty=1:12,lwd=2)
 ```
 
 
