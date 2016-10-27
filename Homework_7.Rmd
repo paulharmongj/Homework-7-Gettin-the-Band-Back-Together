@@ -86,7 +86,7 @@ library(pander)
 alltheAICs<-AIC(m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12)
 changeinAIC<-rep(12,12)
 for(i in 1:12) {
-  changeinAIC[i]<-alltheAICs[i]-min(alltheAICs$AIC)
+  changeinAIC[i]<-alltheAICs$AIC[i]-min(alltheAICs$AIC)
 }
 unsorted<-data.frame(cbind(alltheAICs,changeinAIC))
 rownames(unsorted)<-c("No trend, no seasonal component","No trend, seasonal means","No trend, single harmonic","No trend, 5th order harmonic","Linear trend, no seasonal component","Linear trend, seasonl means","Linear trend, single harmonic","Linear trend, 5th order trend","Quad trend, no seasonal component","Quad trend, seasonal means","Quad trend, single harmonic","Quad trend, 5th order harmonic")
@@ -144,39 +144,30 @@ library(nlme)
 set.seed(10282016)
 num.sims=100
 x=seq(1,109,by=1)
-happened.ar<-logical(length=num.sims)
 happened.ma<-logical(length=num.sims)
-happened.lm.ar<-logical(length=num.sims)
-happened.lm.ma<-logical(length=num.sims)
-ar<-as.data.frame(cbind(seq(1,109,by=1),rep(12,109)))
-ma<-as.data.frame(cbind(seq(1,109,by=1),rep(12,109)))
-colnames(ar)<-c("index","noise")
-colnames(ma)<-c("index","noise")
+happened.ar<-logical(length=num.sims)
+happened.lm<-logical(length=num.sims)
+DAT<-as.data.frame(cbind(seq(1,109,by=1),rep(12,109)))
+colnames(DAT)<-c("index","noise")
 
 for(i in 1:num.sims) {
-  ar[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=sqrt(0.0006664659))
-  ma[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=sqrt(0.0006664659))
-  model.ma.gls<-gls(noise~index,data=ma,correlation=corARMA(p=0,q=1))
-  model.ar.gls<-gls(noise~index,data=ar,correlation=corARMA(p=1,q=0))
-  model.lm.ma<-lm(noise~index,data=ma)
-  model.lm.ar<-lm(noise~index,data=ar)
-  pvalue.art<-summary(model.ar.gls)$tTable[2,4]
-  pvalue.mat<-summary(model.ma.gls)$tTable[2,4]
-  pvalue.lm.ma<-summary(model.lm.ma)$coefficient[2,4]
-  pvalue.lm.ar<-summary(model.lm.ar)$coefficient[2,4]
-  happened.ma[i]<-pvalue.mat<.05
-  happened.ar[i]<-pvalue.art<.05
-  happened.lm.ma[i]<-pvalue.lm.ma<.05
-  happened.lm.ar[i]<-pvalue.lm.ar<.05
+  DAT[,2]<-arima.sim(n=109,model=list(ar=c(.6)),sd=sqrt(0.0006664659))
+  model.gls.ma<-gls(noise~index,data=DAT,correlation=corARMA(p=0,q=1))
+  model.gls.ar<-gls(noise~index,data=DAT,correlation=corARMA(p=1,q=0))
+  model.lm<-lm(noise~index,data=DAT)
+  pvalue.ar<-summary(model.gls.ar)$tTable[2,4]
+  pvalue.ma<-summary(model.gls.ma)$tTable[2,4]
+  pvalue.lm<-summary(model.lm)$coefficient[2,4]
+  happened.ma[i]<-pvalue.ma<.05
+  happened.ar[i]<-pvalue.ar<.05
+  happened.lm[i]<-pvalue.lm<.05
 }
-sim.gls.ar<-sum(happened.ar==TRUE)/num.sims
-sim.gls.ar
-sim.lm.ar<-sum(happened.lm.ar==TRUE)/num.sims
-sim.lm.ar
 sim.gls.ma<-sum(happened.ma==TRUE)/num.sims
 sim.gls.ma
-sim.lm.ma<-sum(happened.lm.ma==TRUE)/num.sims
-sim.lm.ma
+sim.gls.ar<-sum(happened.ar==TRUE)/num.sims
+sim.gls.ar
+sim.lm<-sum(happened.lm==TRUE)/num.sims
+sim.lm
 ```
 
 ## Some derivation practice (these can be handwritten). If you have not completed STAT 421 or equivalent, please try the problem and then take advantage of advanced help by stopping by to chat about your answer. 
