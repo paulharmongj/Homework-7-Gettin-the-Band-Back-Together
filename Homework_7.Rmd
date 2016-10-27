@@ -137,12 +137,12 @@ legend("topleft",fill = c("hotpink","red","blue"), c("CO2","Top Fitting Model","
 
 - _In a `gls` model summary, the estimates, SEs, test statistics, and p-values are contained in the `tTable` part of the summary. It has a similar layout to `coef` that we pulled the [2,4] element from to get the p-value from `lm`._
 
-The simulation study is given below. Using the MA(1) error from the GLS function and the AR(1) structure, we extracted the p-values from each model summary and estimated the respective Type I error rates. With the GLS function using AR(1) we appear to get a .05 error rate (as expected) and for the MA(1) error, we obtain a Type I error rate of 0.066, which is slightly inflated.  
+The simulation study is given below. Accounting for MA(1) and AR(1) processes using GLS, we can examine Type I error rates with noise generated from the arima.sim function, with positive correlation. The Type I error rates under GLS when we account for MA(1) error, AR(1) error, and a linear model can be found in the table below. We can see in this table that the error rate when we account for AR(1) is about what we would expect it to be (0.05). The error rates for the other models also make sense; we would expect both the MA(1) error model and the linear model to not do a great job with the simulated data, but the moving average should do somewhat better as it is at least attempting to pick up on autocorrelation whereas the linear model is not.
 
 ```{r prob 5,tidy=TRUE,tidy.opts=list(width.cutoff=50),cache=TRUE}
 library(nlme)
 set.seed(10282016)
-num.sims=100
+num.sims=1000
 x=seq(1,109,by=1)
 happened.ma<-logical(length=num.sims)
 happened.ar<-logical(length=num.sims)
@@ -167,6 +167,7 @@ sim.gls.ar<-sum(happened.ar==TRUE)/num.sims
 sim.lm<-sum(happened.lm==TRUE)/num.sims
 
 tablething<-cbind(sim.gls.ma,sim.gls.ar,sim.lm)
+pander(tablething)
 ```
 
 ## Some derivation practice (these can be handwritten). If you have not completed STAT 421 or equivalent, please try the problem and then take advantage of advanced help by stopping by to chat about your answer. 
