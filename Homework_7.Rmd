@@ -2,7 +2,7 @@
 title: 'Homework 7:'
 author: "Paul Harmon, Jacob Dym, and Justin Gomez"
 date: "October 31, 2016"
-output: word_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE,warning=F,message=F,comment=NA,fig.width=6,fig
   - __You should be creating a table that contains twelve models.__
 
 After fitting the twelve models with a combination of trends and seasonal components, a plot of all of the models can be examined to get an idea for what models we are looking at. The plot tells us that the models with a quadratic or linear trend follow the time series relatively well whereas the models with no trend don't do a great job, as expected. The table below displays information for the twelve models created with different combinations of trends and seasonal components. The table has been sorted by AIC for each model, from lowest to highest, allowing us to essentially rank the models in terms of fit. The lowest AIC is the "best" model. In this case, there is strong support for the model with a quadratic trend and single harmonic as it has the lowest AIC, and it beats the next best by more than eleven AIC units.
-```{r prob1,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
+```{r prob1,tidy=TRUE,tidy.opts=list(width.cutoff=50),cache=TRUE,fig.height=3.5}
 #read in the data
 CGO <- read.table("ftp://aftp.cmdl.noaa.gov/data/trace_gases/co2/flask/surface/co2_cgo_surface-flask_1_ccgg_month.txt",header=T)
 colnames(CGO) = c("Site", "Year", "Month", "Value")
@@ -24,63 +24,50 @@ YearF <- as.vector(time(CGOts))
 MonthF <- as.factor(cycle(CGOts))
 
 library(TSA)
-
 #m1 - no trend, no seasonal component
 m1<-lm(CGO$Value~1)
 fits1<-fitted(m1)
-
 #m2 - no trend, seasonal means
 m2<-lm(CGO$Value~1+MonthF)
 fits2<-fitted(m2)
-
 #m3 - no trend, single harm
 m3<-lm(CGO$Value~1+harmonic(CGOts,m=1))
 fits3<-fitted(m3)
-
 #m4 - no trend, 5th order harm
 m4<-lm(CGO$Value~1+harmonic(CGOts,m=5))
 fits4<-fitted(m4)
-
 #m5 - linear trend, no season
 m5<-lm(CGO$Value~YearF)
 fits5<-fitted(m5)
-
 #m6 - linear trend, seasonal means
 m6<-lm(CGO$Value~YearF+MonthF)
 fits6<-fitted(m6)
-
 #m7 - linear trend, single harm
 m7<-lm(CGO$Value~YearF+harmonic(CGOts,m=1))
 fits7<-fitted(m7)
-
 #m8 - linear trend, 5th order harm
 m8<-lm(CGO$Value~YearF+harmonic(CGOts,m=5))
 fits8<-fitted(m8)
-
 #m9 - quad trend, no season
 m9<-lm(CGO$Value~poly(YearF,degree=2))
 fits9<-fitted(m9)
-
 #m10 - quad trend, seasonal means
 m10<-lm(CGO$Value~poly(YearF,degree=2)+MonthF)
 fits10<-fitted(m10)
-
 #m11 - quad trend, single order harm
 m11<-lm(CGO$Value~poly(YearF,degree=2)+harmonic(CGOts,m=1))
 fits11<-fitted(m11)
-
 #m12 - quad trend, 5th order harm
 m12<-lm(CGO$Value~poly(YearF,degree=2)+harmonic(CGOts,m=5))
 fits12<-fitted(m12)
-
 #real inefficient code...
 allthefits<-cbind(fits1,fits2,fits3,fits4,fits5,fits6,fits7,fits8,fits9,fits10,fits11,fits12)
 matplot(YearF,allthefits,type="l",col=1:12,lty=1:12,lwd=2,main="Plot of All Twelve Models",xlab="Year",ylab="CO2 Concentration")
-legend("topleft",fill = c(1:12), c("m1","m2","m3","m4","m5","m6","m7","m8","m9","m10","m11","m12"),ncol=4,bty="n",x.intersp=.1,cex=.7)
+legend("topleft",fill = c(1:12), c("m1","m2","m3","m4","m5","m6","m7","m8","m9","m10","m11","m12"),ncol=4,bty="n",x.intersp=.1,cex=.9)
 ```
 
 
-```{r table1,tidy=TRUE,tidy.opts=list(width.cutoff=50)}
+```{r table1setup,tidy=TRUE,tidy.opts=list(width.cutoff=50),include=FALSE}
 library(pander)
 alltheAICs<-AIC(m1,m2,m3,m4,m5,m6,m7,m8,m9,m10,m11,m12)
 changeinAIC<-rep(12,12)
@@ -91,9 +78,11 @@ unsorted<-data.frame(cbind(alltheAICs,changeinAIC))
 rownames(unsorted)<-c("No trend, no seasonal component","No trend, seasonal means","No trend, single harmonic","No trend, 5th order harmonic","Linear trend, no seasonal component","Linear trend, seasonl means","Linear trend, single harmonic","Linear trend, 5th order trend","Quad trend, no seasonal component","Quad trend, seasonal means","Quad trend, single harmonic","Quad trend, 5th order harmonic")
 colnames(unsorted)<-c("Num. of free pars","AIC","Change in AIC")
 sorted<-unsorted[order(unsorted$AIC),]
-pandoc.table(sorted)
 ```
 
+```{r table1}
+pander(sorted)
+```
 
 2) _Now fit a `gam` from the `mgcv` package that includes a long-term trend based on a thin-plate spline with shrinkage that uses `k=#years,bs="ts"` from the fractional year variable and a cyclic spline seasonal component. To build the cyclic spline component, use the numerically coded month variable that goes from 1 to 12 and `k=12,bs="cc"`. Fit the model, plot the long-term trend and the seasonal component and discuss the estimated components, using both the plots and the EDF of each term._
 
@@ -116,7 +105,6 @@ The AIC value for the GAM is given in the output below as -210.76. Note that thi
 AIC(gam.model)
 ```
 
-
 4) _Compare the fitted values of your GAM to those from your top model, plotting the two models's results and the responses vs time on the same plot._
 
 The fitted values of the GAM, the top model, and the responses are all relatively similar. Note that near the edges the top-fitting model appears to differ somewhat from the actual response (CO2); however, the GAM fits very similarly for the entire range of time.  It appears the the GAM performs better than the Top-Fitting Model as it more consistently matches the actual CO2 responses from 1984 to 2016. 
@@ -128,10 +116,8 @@ par(mfrow=c(1,1))
 plot(CGOts,col="hotpink",lwd=4, main = "Comparison of Fitted Values", ylab = "CO2")
 lines(topfit~YearF,type="l",col="red",lwd=3)
 lines(gamfit~YearF,type="l",col="blue",lwd=3,lty=2)
-legend("topleft",fill = c("hotpink","red","blue"), c("CO2","Top Fitting Model","GAM"),cex=.8)
+legend("topleft",fill = c("hotpink","red","blue"), c("Original Time Series","Top Fitting Model","GAM"),cex=.8)
 ```
-
-## A simulation study with autocorrelation present
 
 5) _Revisit your simulation with an AR(1) from HW 6 \# 10. Consider fitting a model with autocorrelation in it using `gls` from the `nlme` package that accounts for an MA(1) error and another that accounts for an AR(1) error. Run your simulation code, extracting the p-values from the two model summaries and estimate the type I error rate in each situation and compare it to what you get from the regular linear model._ 
 
@@ -170,8 +156,6 @@ tablething<-cbind(sim.gls.ma,sim.gls.ar,sim.lm)
 pander(tablething)
 ```
 
-## Some derivation practice (these can be handwritten). If you have not completed STAT 421 or equivalent, please try the problem and then take advantage of advanced help by stopping by to chat about your answer. 
-
 6) _Answer Cryer and Chan question 2.4 (page 20)_
 
 
@@ -181,7 +165,7 @@ In general, the autocorrelation function is calculated as follows:
 $$\rho_{t,s} = \frac{\gamma_{t,s]}}{\sqrt(\gamma_{s,s}\gamma_{t,t}}$$ 
 
 This is equal to:
-$$\frac{\theta\sigma^2_{w}}{\sqrt((1+\theta^{2})\sigma^{2}_{w})}$$
+$$\frac{\theta\sigma^2_{w}}{\sqrt{(1+\theta^{2})\sigma^{2}_{w}}}$$
 
 Cancelling terms out, we obtain:
 $$\frac{\theta}{1+\theta^{2}}$$ 
