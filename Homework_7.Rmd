@@ -191,8 +191,8 @@ b)
     __The variance of y can be calculated similarly;__
     \begin{align*}
     Var(y_t) &= (\frac{1}{2})^{2}Var(x_t) + (\frac{1}{2})^{2}Var(x_{t-1}) + 2(\frac{1}{2})^2Cov(x_t, x_{t-1})\\
-    &= \frac{4}{4} + \frac{4}{4}\\
-    &= 2
+    &= \frac{4}{4} + \frac{4}{4} + \frac{4}{4}\\
+    &= 3
     \end{align*}
     __The covariance of $y_t$ is;__
     \begin{align*}
