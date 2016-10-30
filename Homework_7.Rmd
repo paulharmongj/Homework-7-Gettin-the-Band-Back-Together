@@ -160,7 +160,6 @@ a)
     __In general, the autocorrelation function is calculated as follows:__
     \begin{align*}
     \rho_{t,s} &= \frac{\gamma_{t,s}}{\sqrt{\gamma_{s,s}\gamma_{t,t}}}\\
-    &= \frac{\theta\sigma^2_{w}}{\sqrt{(1+\theta^{2})\sigma^{2}_{w}}}\\
     &= \frac{\theta}{1+\theta^{2}}
     \end{align*}
     __We can then plug in both values for $\theta$. Note that for $3$ we obtain $\frac{3}{10}$ and we obtain the same answer when plugging in $\frac{1}{3}$ as well. Thus our solution is the same for both values of $\theta$.__ 
